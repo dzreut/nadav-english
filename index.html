@@ -1,0 +1,559 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Nadav's English Cup</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: a night-match broadcast. TV scoreboard on top, floodlit pitch with a real goal in the middle, the question below like a coach's tactics board. One dark look on purpose. */
+:root{
+  --night:#0a1424; --panel:#122238; --panel2:#1a2f4d; --line:#2b4769;
+  --ink:#f2f6fc; --muted:#a6b6cf;
+  --grass1:#2e8b47; --grass2:#28803f; --chalk:#e9f5ec;
+  --gold:#ffc93c; --good:#36d17c; --bad:#ff5d62; --sky:#5aa9ff;
+  --display:'Bebas Neue','Impact','Arial Narrow',sans-serif;
+  --body:'Rubik','Segoe UI',system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{min-height:100%}
+body{background:radial-gradient(1200px 500px at 50% -120px,#1d3a63 0%,var(--night) 60%) fixed,var(--night);color:var(--ink);font-family:var(--body);font-size:16px}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{max-width:980px;margin:0 auto;padding-block:16px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
+.he{direction:rtl;font-family:var(--body)}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:30px;letter-spacing:.04em;line-height:1}
+.brand .ballico{font-size:28px}
+.chips{display:flex;gap:8px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-variant-numeric:tabular-nums}
+.iconbtn{width:42px;height:42px;border-radius:21px;background:var(--panel);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:18px}
+
+/* home */
+.hero{display:grid;grid-template-columns:260px minmax(0,1fr);gap:22px;align-items:center;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:26px;padding:22px}
+.hero h1{margin:0;font-family:var(--display);font-size:clamp(46px,7vw,72px);line-height:.92;letter-spacing:.02em}
+.hero h1 span{color:var(--gold)}
+.hero p{margin:8px 0 0;color:var(--muted);line-height:1.5}
+.hero .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn{border-radius:14px;padding:13px 20px;font-weight:800;font-size:17px;background:var(--panel2);border:1px solid var(--line)}
+.btn.main{background:var(--gold);color:#1b1300;border-color:var(--gold);box-shadow:0 4px 0 #b88a12}
+.btn.main:active{transform:translateY(3px);box-shadow:0 1px 0 #b88a12}
+.card{display:flex;flex-direction:column;align-items:center;gap:6px;background:#0d1b2e;border:1px solid var(--line);border-radius:20px;padding:14px}
+.card .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;text-align:center}
+.card .stats div{background:var(--panel);border-radius:10px;padding:6px 2px}
+.card .stats b{display:block;font-family:var(--display);font-size:26px;line-height:1;color:var(--gold)}
+.card .stats small{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.sec{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.sec h2{margin:0;font-family:var(--display);font-size:34px;letter-spacing:.03em}
+.sec .he{color:var(--muted)}
+.road{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.match{position:relative;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px 12px;display:flex;flex-direction:column;gap:6px;min-height:178px}
+.match .stage-no{font-size:12px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.match .crest{font-size:38px;line-height:1}
+.match b{font-size:16px;line-height:1.2}
+.match .theme{font-size:13px;color:var(--muted);line-height:1.3}
+.match .st{margin-top:auto;font-size:18px;letter-spacing:2px;color:var(--gold)}
+.match.locked{opacity:.45;cursor:not-allowed}
+.match.next{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold) inset}
+.match.final{background:linear-gradient(180deg,#3a2c05,var(--panel))}
+.train{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.tr{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px;text-align:left;display:flex;flex-direction:column;gap:4px}
+.tr .i{font-size:26px}
+.tr b{font-size:15px}
+.tr small{color:var(--muted);font-size:13px;direction:rtl;text-align:right}
+
+/* match */
+.board{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;background:#06101d;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.side{display:flex;align-items:center;gap:10px;padding:10px 14px;min-width:0}
+.side.away{justify-content:flex-end}
+.side .nm{font-family:var(--display);font-size:28px;letter-spacing:.04em;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{width:38px;height:38px;border-radius:19px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;font-weight:800}
+.score{display:flex;align-items:center;gap:0;background:var(--gold);color:#1b1300;font-family:var(--display);font-size:44px;line-height:1;padding:6px 16px;font-variant-numeric:tabular-nums}
+.score .min{font-size:18px;background:#1b1300;color:var(--gold);border-radius:6px;padding:3px 6px;margin:0 10px}
+.comm{min-height:24px;text-align:center;color:var(--muted);font-weight:500}
+.comm b{color:var(--ink)}
+.dots{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.dots i{width:12px;height:12px;border-radius:6px;background:var(--line)}
+.dots i.g{background:var(--good)}.dots i.y{background:var(--gold)}.dots i.s{background:var(--bad)}.dots i.n{background:var(--ink)}
+.fb.rebound{background:#3a2f0a;border:1px solid var(--gold)}
+.opt:disabled{opacity:.45;cursor:not-allowed}
+.zone:disabled{opacity:.3;cursor:not-allowed}
+
+.stage{position:relative;height:300px;border-radius:20px;overflow:hidden;background:repeating-linear-gradient(90deg,var(--grass1) 0 64px,var(--grass2) 64px 128px);border:1px solid #1f6a35}
+.stage::before{content:"";position:absolute;left:8%;right:8%;top:0;height:200px;border:3px solid rgba(233,245,236,.7);border-top:0}
+.stage::after{content:"";position:absolute;left:50%;bottom:30px;width:10px;height:10px;margin-left:-5px;border-radius:5px;background:var(--chalk)}
+.goal{position:absolute;left:50%;top:18px;transform:translateX(-50%);width:min(470px,86%);height:158px;border:7px solid #fff;border-bottom:0;border-radius:4px 4px 0 0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.2) 0 2px,transparent 2px 15px),repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 2px,transparent 2px 15px),rgba(5,20,10,.35);z-index:1}
+.goal.shake{animation:net .5s}
+@keyframes net{30%{transform:translateX(-50%) scale(1.03,1.05)}60%{transform:translateX(-50%) scale(.99)}}
+.keeper{position:absolute;left:50%;bottom:0;width:58px;height:96px;transform:translateX(-50%);transition:transform .5s cubic-bezier(.2,.8,.3,1);z-index:2;pointer-events:none}
+.keeper .hd{position:absolute;left:17px;top:0;width:24px;height:24px;border-radius:12px;background:#f1c7a1}
+.keeper .bd{position:absolute;left:6px;top:22px;width:46px;height:46px;border-radius:12px 12px 6px 6px;background:#ff8a1e}
+.keeper .ar{position:absolute;top:26px;width:12px;height:38px;border-radius:6px;background:#ff8a1e}
+.keeper .ar.l{left:-6px;transform:rotate(25deg)}.keeper .ar.r{right:-6px;transform:rotate(-25deg)}
+.keeper .lg{position:absolute;top:66px;width:14px;height:30px;border-radius:5px;background:#202a3a}
+.keeper .lg.l{left:12px}.keeper .lg.r{right:12px}
+.zone{position:absolute;width:86px;height:58px;border-radius:14px;border:3px solid #fff;background:rgba(6,16,29,.72);font-family:var(--body);font-weight:800;font-size:28px;color:#fff;z-index:3;display:flex;align-items:center;justify-content:center;transition:transform .12s,background .15s}
+.zone:hover{transform:scale(1.08);background:rgba(255,201,60,.9);color:#1b1300}
+.zone .k{position:absolute;top:2px;left:6px;font-size:11px;opacity:.7}
+.ball{position:absolute;left:50%;bottom:16px;width:46px;height:46px;margin-left:-23px;font-size:40px;line-height:46px;text-align:center;z-index:4;transition:transform .55s cubic-bezier(.25,.7,.35,1);pointer-events:none}
+.flash{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:clamp(70px,14vw,130px);color:var(--gold);text-shadow:0 6px 0 #6b4d00,0 0 30px rgba(0,0,0,.6);letter-spacing:.05em;z-index:5;pointer-events:none;animation:pop .9s ease-out forwards}
+.flash.save{color:#fff;text-shadow:0 6px 0 #7a1d20}
+@keyframes pop{0%{transform:scale(.3);opacity:0}25%{transform:scale(1.15);opacity:1}70%{opacity:1}100%{transform:scale(1);opacity:0}}
+
+.tactics{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.qhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tag{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;background:var(--sky);color:#04203f;border-radius:8px;padding:3px 8px}
+.qtitle{font-size:20px;font-weight:700}
+.qhe{color:var(--muted);font-size:15px;margin-inline-start:auto}
+.prompt{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;text-align:center;background:#0d1b2e;border-radius:16px;padding:16px;min-height:96px}
+.prompt .pic{font-size:64px;line-height:1}
+.prompt .word{font-size:44px;font-weight:800;letter-spacing:.06em}
+.prompt .big{font-size:30px;font-weight:700;line-height:1.35}
+.prompt .text{font-size:21px;line-height:1.6;text-align:left;max-width:640px}
+.prompt .stmt{font-size:24px;font-weight:700;color:var(--gold)}
+.say{width:44px;height:44px;border-radius:22px;background:var(--panel2);border:1px solid var(--line);font-size:20px;flex-shrink:0}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.opts.one{grid-template-columns:minmax(0,1fr)}
+.opt{position:relative;background:var(--panel2);border:2px solid var(--line);border-radius:14px;padding:14px 14px 14px 44px;text-align:left;font-size:20px;font-weight:700;min-height:58px;transition:transform .1s,border-color .15s}
+.opt:hover{border-color:var(--sky)}
+.opt .n{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:6px;background:var(--line);font-size:13px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.opt.ok{border-color:var(--good);background:#12402a}
+.opt.no{border-color:var(--bad);background:#4a1619}
+.slots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:56px}
+.slot{min-width:46px;height:54px;border-radius:12px;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;padding:0 10px}
+.slot.f{border-style:solid;border-color:var(--sky);background:#0d1b2e;cursor:pointer}
+.tiles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tile{min-width:50px;height:54px;border-radius:12px;background:var(--panel2);border:2px solid var(--line);font-size:24px;font-weight:800;padding:0 12px;box-shadow:0 3px 0 #0a1424}
+.tile:hover{border-color:var(--sky)}
+.tile.used{visibility:hidden}
+.fb{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-radius:14px;padding:12px 14px;font-size:18px}
+.fb.good{background:#12402a;border:1px solid var(--good)}
+.fb.bad{background:#3a1416;border:1px solid var(--bad)}
+.fb .btn{margin-inline-start:auto}
+.keys{font-size:13px;color:var(--muted);text-align:center}
+
+/* result */
+.result{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:26px;padding:28px 18px}
+.result h1{margin:0;font-family:var(--display);font-size:clamp(54px,10vw,96px);line-height:.9;letter-spacing:.03em}
+.result .fs{font-family:var(--display);font-size:56px;line-height:1;font-variant-numeric:tabular-nums}
+.result .stars{font-size:40px;letter-spacing:6px;color:var(--gold)}
+.result .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.trophy{font-size:110px;line-height:1;animation:float 2.4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px) rotate(-4deg)}}
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:30}
+.confetti i{position:absolute;top:-20px;width:10px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+/* locker */
+.kits{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.kit{background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.kit.on{border-color:var(--gold)}
+.nums{display:flex;gap:8px;flex-wrap:wrap}
+.nums button{width:52px;height:52px;border-radius:12px;background:var(--panel);border:2px solid var(--line);font-family:var(--display);font-size:28px}
+.nums button.on{border-color:var(--gold);color:var(--gold)}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .road,.train,.kits{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .match.final{grid-column:1/-1}
+  .side .nm{font-size:20px}
+  .score{font-size:34px;padding:6px 10px}
+  .score .min{margin:0 6px}
+  .stage{height:260px}
+  .goal{height:136px}
+  .zone{width:64px;height:48px;font-size:22px}
+  .opts{grid-template-columns:minmax(0,1fr)}
+  .qhe{margin-inline-start:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .ball,.keeper{transition-duration:.01s}
+  .flash,.trophy,.goal.shake{animation:none}
+  .confetti{display:none}
+}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+(function(){
+/* ---------------- content: Grade 4, Unit 1 ---------------- */
+var VOCAB=[
+ ['pencil','עיפרון','✏️'],['ruler','סרגל','📏'],['book','ספר','📖'],['scissors','מספריים','✂️'],['schoolbag','ילקוט','🎒'],
+ ['computer','מחשב','💻'],['clock','שעון','🕐'],['chair','כיסא','🪑'],['apple','תפוח','🍎'],['fish','דג','🐟'],
+ ['dog','כלב','🐶'],['cat','חתול','🐱'],['bird','ציפור','🐦'],['tree','עץ','🌳'],['car','מכונית','🚗'],
+ ['bus','אוטובוס','🚌'],['hat','כובע','🎩'],['cake','עוגה','🎂'],['cup','ספל','☕'],['bed','מיטה','🛏️'],
+ ['egg','ביצה','🥚'],['flower','פרח','🌸'],['moon','ירח','🌙'],['sun','שמש','☀️'],['ball','כדור','⚽'],
+ ['house','בית','🏠'],['sock','גרב','🧦'],['duck','ברווז','🦆'],['kite','עפיפון','🪁'],['star','כוכב','⭐'],
+ ['phone','טלפון','📱'],['shoe','נעל','👟'],['teacher','מורה','🧑‍🏫'],['sheep','כבשה','🐑'],['three','שלוש','3️⃣']
+];
+var SOUNDS=[
+ ['ship','sh','🚢'],['shoe','sh','👟'],['fish','sh','🐟'],['sheep','sh','🐑'],['shell','sh','🐚'],['shirt','sh','👕'],['brush','sh','🪥'],['shark','sh','🦈'],['dish','sh','🍽️'],['shop','sh','🏪'],
+ ['chair','ch','🪑'],['cheese','ch','🧀'],['chicken','ch','🐔'],['lunch','ch','🍱'],['teacher','ch','🧑‍🏫'],['peach','ch','🍑'],['watch','ch','⌚'],['chips','ch','🍟'],['cherry','ch','🍒'],['beach','ch','🏖️'],
+ ['phone','ph','📱'],['photo','ph','📷'],['dolphin','ph','🐬'],['elephant','ph','🐘'],['alphabet','ph','🔤'],['trophy','ph','🏆'],['microphone','ph','🎤'],['headphones','ph','🎧'],['graph','ph','📊'],
+ ['three','th','3️⃣'],['bath','th','🛁'],['thumb','th','👍'],['teeth','th','🦷'],['mother','th','👩'],['father','th','👨'],['brother','th','👦'],['math','th','➗'],['path','th','🛤️'],['think','th','🤔']
+];
+var QA=[
+ ["What's your name?","My name is Nadav."],["How old are you?","I'm nine years old."],["Where do you live?","I live in Haifa."],
+ ["What grade are you in?","I'm in grade four."],["What school do you go to?","I go to Herzl School."],["How are you?","I'm fine, thank you."],
+ ["Do you have a sister?","Yes, I have one sister."],["What day is it today?","It's Sunday."],["What's this?","It's a pencil."],
+ ["What color is it?","It's blue."],["Can you swim?","Yes, I can."],["Who is your teacher?","My teacher is Dana."],
+ ["Where is the book?","It's on the desk."],["How many brothers do you have?","I have two brothers."],["Is it a cat?","No, it isn't. It's a dog."],
+ ["Do you have a pet?","Yes, I have a fish."],["When is your birthday?","It's in May."],["Do you like English?","Yes, I love English!"]
+];
+var SENT=["My name is Nadav.","I live in Haifa.","I am in grade four.","I have two brothers.","She has a red schoolbag.","The cat is on the chair.",
+ "He is ten years old.","Where do you live?","Do you have a pet?","My teacher is very nice.","I go to school by bus.","What is your name?",
+ "The fish is in the water.","I have a phone and a book."];
+var GRAM=[
+ {s:'She ___ two brothers.',o:['has','have'],a:0},{s:'I ___ in grade four.',o:['am','is','are'],a:0},{s:'They ___ my friends.',o:['are','is','am'],a:0},
+ {s:'He ___ ten years old.',o:['is','are','am'],a:0},{s:'I ___ a dog.',o:['have','has'],a:0},{s:'___ you like English?',o:['Do','Does','Is'],a:0},
+ {s:'___ she have a cat?',o:['Does','Do','Is'],a:0},{s:'Where ___ you live?',o:['do','does','is'],a:0},{s:'My teacher ___ nice.',o:['is','are','am'],a:0},
+ {s:'We ___ in Haifa.',o:['live','lives'],a:0},{s:'Dana ___ to Rabin School.',o:['goes','go'],a:0},{s:'The books ___ on the desk.',o:['are','is'],a:0}
+];
+var READ=[
+ {t:"Hi! My name is Maya. I am nine years old. I live in Eilat. I go to Rabin School. I am in grade four. I have a dog. His name is Rex.",
+  st:[['Maya is nine.',1],['Maya lives in Haifa.',0],['Maya has a cat.',0],['Rex is a dog.',1],['Maya is in grade four.',1]]},
+ {t:"This is Omer. He is ten. He has two sisters and one brother. He likes math and English. His teacher is Ms. Cohen.",
+  st:[['Omer has two brothers.',0],['Omer likes math.',1],['Omer is ten.',1],['His teacher is Mr. Cohen.',0]]},
+ {t:"Hello! I'm Tal. Today is Thursday. I have a phone with a photo of a dolphin. I love sharks and fish!",
+  st:[['Today is Sunday.',0],['Tal has a phone.',1],['The photo is of a dog.',0],['Tal loves fish.',1]]}
+];
+
+var TEAMS=[
+ {name:'Shark City',code:'SHA',crest:'🦈',col:'#2f6fd6',theme:'Sound Penalties',he:'בעיטות צלילים: sh, ch, ph, th',
+  types:['sound','sound','odd','sound','sound','odd','sound','sound']},
+ {name:'Cheetah United',code:'CHE',crest:'🐆',col:'#d98b14',theme:'Word Wizards',he:'מילים: תמונה, תרגום ואיות',
+  types:['pic','he','spell','pic','he','spell','pic','spell']},
+ {name:'Phoenix Rovers',code:'PHX',crest:'🦅',col:'#c2410c',theme:'Q&A Passing',he:'שאלות ותשובות',
+  types:['qa','aq','qa','gram','aq','qa','gram','aq']},
+ {name:'Thunder FC',code:'THU',crest:'⚡',col:'#7c3aed',theme:'Sentence Builders',he:'בונים משפטים',
+  types:['build','gram','build','aq','build','spell','gram','build']},
+ {name:'Test Day United',code:'TDU',crest:'🏆',col:'#b8860b',theme:'The Final',he:'גמר: הכול ביחד',
+  types:['sound','pic','qa','build','read','spell','read','aq','odd','read']}
+];
+var TRAIN=[
+ {t:'sound',n:'Sound Penalties',h:'הצליל החסר',i:'🎯'},{t:'odd',n:'Odd One Out',h:'מי לא שייך?',i:'🕵️'},
+ {t:'pic',n:'Picture Words',h:'תמונה למילה',i:'🖼️'},{t:'he',n:'Translate',h:'עברית לאנגלית',i:'🔁'},
+ {t:'spell',n:'Spelling',h:'איות',i:'🔤'},{t:'qa',n:'Answer It',h:'שאלה ותשובה',i:'💬'},
+ {t:'aq',n:'Ask It',h:'מתשובה לשאלה',i:'❓'},{t:'gram',n:'Grammar',h:'is / are / has / have',i:'🧩'},
+ {t:'build',n:'Build Sentences',h:'סידור משפטים',i:'🏗️'},{t:'read',n:'Reading',h:'נכון או לא נכון',i:'📖'}
+];
+var KITS=[{id:'blue',n:'Blue',c:'#2563eb',p:0},{id:'red',n:'Red',c:'#dc2626',p:40},{id:'green',n:'Green',c:'#16a34a',p:80},{id:'black',n:'Black',c:'#1f2937',p:120},{id:'gold',n:'Gold',c:'#c99700',p:200}];
+var NUMS=[10,7,9,11,23];
+var GOALTXT=['GOOOAL! What a shot, Nadav!','Top corner! The crowd goes wild!','Nadav scores! Beautiful goal!','Into the net! Amazing!','What a strike! GOAL!'];
+var SAVETXT=['Saved! The keeper stops it.','Oh no! Great save by the keeper.','So close! No goal.'];
+var ZONES=[[.17,.32],[.83,.32],[.17,.74],[.83,.74]];
+
+/* ---------------- helpers ---------------- */
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function load(){try{var v=JSON.parse(localStorage.getItem('nadav-cup')||'null');if(v&&typeof v==='object')return v;}catch(e){}return null;}
+var P=load()||{coins:0,unlocked:0,stars:{},trophies:0,kit:'blue',owned:['blue'],num:10,goals:0,sound:true};
+function save(){try{localStorage.setItem('nadav-cup',JSON.stringify(P));}catch(e){}}
+function kitColor(){for(var i=0;i<KITS.length;i++)if(KITS[i].id===P.kit)return KITS[i].c;return KITS[0].c;}
+
+/* ---------------- sound ---------------- */
+var ac=null;
+function ctx(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}return ac;}
+function tone(f,st,du,type,vol){var a=ctx();if(!a||!P.sound)return;try{var t=a.currentTime+st,o=a.createOscillator(),g=a.createGain();o.type=type||'square';o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol||.12,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+du);o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+du+.05);}catch(e){}}
+function crowd(dur){var a=ctx();if(!a||!P.sound)return;try{var n=Math.floor(a.sampleRate*dur),b=a.createBuffer(1,n,a.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);var s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();f.type='bandpass';f.frequency.value=900;f.Q.value=.6;g.gain.value=.5;s.buffer=b;s.connect(f);f.connect(g);g.connect(a.destination);s.start();}catch(e){}}
+function whistle(){tone(2600,0,.18,'sine',.1);tone(2600,.24,.4,'sine',.1);}
+function goalSfx(){crowd(1.8);tone(523,0,.15,'triangle',.15);tone(659,.12,.15,'triangle',.15);tone(784,.24,.35,'triangle',.15);}
+function saveSfx(){tone(140,0,.25,'sine',.25);tone(110,.1,.3,'sine',.2);}
+var enVoice=null;
+function voices(){try{var v=speechSynthesis.getVoices();enVoice=v.filter(function(x){return /^en(-|_)US/i.test(x.lang);})[0]||v.filter(function(x){return /^en/i.test(x.lang);})[0]||null;}catch(e){}}
+if('speechSynthesis' in window){voices();try{speechSynthesis.onvoiceschanged=voices;}catch(e){}}
+function say(t){if(!P.sound||!('speechSynthesis' in window)||!t)return;try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.85;if(enVoice)u.voice=enVoice;speechSynthesis.speak(u);}catch(e){}}
+
+/* ---------------- question makers ---------------- */
+var used={};
+function fresh(key,list){used[key]=used[key]||[];var free=list.filter(function(_,i){return used[key].indexOf(i)<0;});if(!free.length){used[key]=[];free=list;}var it=pick(free);used[key].push(list.indexOf(it));return it;}
+function similarWords(w,n){
+  var c=VOCAB.map(function(v){return v[0];}).filter(function(x){return x!==w;});
+  c=shuffle(c).sort(function(a,b){function sc(x){var s=0;if(x[0]===w[0])s+=2;if(Math.abs(x.length-w.length)<=1)s+=1;return s;}return sc(b)-sc(a);});
+  return c.slice(0,n);
+}
+var MK={
+ sound:function(){var it=fresh('sound',SOUNDS),w=it[0],s=it[1],i=w.indexOf(s);
+   var shown=w.slice(0,i)+'__'+w.slice(i+2),opts=shuffle(['ch','sh','ph','th']);
+   return {type:'sound',tag:'Sound penalty',title:'Shoot into the corner with the missing sound!',he:'בעט לפינה עם הצליל החסר',
+     prompt:'<span class="pic">'+it[2]+'</span><span class="word">'+shown+'</span>',speak:w,mode:'corners',options:opts,correct:opts.indexOf(s),reveal:s+' – '+w};},
+ odd:function(){var s=pick(['ch','sh','ph','th']);var ins=shuffle(SOUNDS.filter(function(x){return x[1]===s;})).slice(0,3);var out=pick(SOUNDS.filter(function(x){return x[1]!==s&&x[0].indexOf(s)<0;}));
+   var opts=shuffle(ins.concat([out]).map(function(x){return x[0];}));
+   return {type:'odd',tag:'Odd one out',title:'Which word does NOT have "'+s+'"?',he:'איזו מילה בלי הצליל '+s+'?',
+     prompt:'<span class="word">'+s+'</span>',mode:'buttons',options:opts,correct:opts.indexOf(out[0]),reveal:out[0]+' has "'+out[1]+'"'};},
+ pic:function(){var it=fresh('pic',VOCAB),opts=shuffle([it[0]].concat(similarWords(it[0],3)));
+   return {type:'pic',tag:'Picture word',title:'What is it? Pick the right word.',he:'בחר את המילה המתאימה לתמונה',
+     prompt:'<span class="pic" style="font-size:84px">'+it[2]+'</span>',mode:'buttons',options:opts,correct:opts.indexOf(it[0]),reveal:it[0]};},
+ he:function(){var it=fresh('he',VOCAB),opts=shuffle([it[0]].concat(similarWords(it[0],3)));
+   return {type:'he',tag:'Translate',title:'How do you say it in English?',he:'איך אומרים באנגלית?',
+     prompt:'<span class="big he">'+it[1]+'</span>',mode:'buttons',options:opts,correct:opts.indexOf(it[0]),reveal:it[1]+' = '+it[0]};},
+ spell:function(){var it=fresh('spell',VOCAB.filter(function(v){return v[0].length>=3&&v[0].length<=8;})),w=it[0];
+   var ab='abcdefghijklmnoprstuwy',extra=[];while(extra.length<2){var l=pick(ab.split(''));if(w.indexOf(l)<0&&extra.indexOf(l)<0)extra.push(l);}
+   var tiles=w.split('');do{tiles=shuffle(w.split('').concat(extra));}while(tiles.slice(0,w.length).join('')===w);
+   return {type:'spell',tag:'Spelling',title:'Spell the word! Two letters are extra.',he:'אייתו את המילה – יש 2 אותיות מיותרות',
+     prompt:'<span class="pic">'+it[2]+'</span><span class="big he">'+it[1]+'</span>',mode:'tiles',tiles:tiles,target:w.split(''),joiner:'',speak:null,reveal:w};},
+ qa:function(){var it=fresh('qa',QA),others=shuffle(QA.filter(function(x){return x!==it;})).slice(0,3).map(function(x){return x[1];});var opts=shuffle([it[1]].concat(others));
+   return {type:'qa',tag:'Q & A',title:'Pick the right answer.',he:'בחר את התשובה המתאימה',
+     prompt:'<span class="big">'+esc(it[0])+'</span>',speak:it[0],mode:'buttons',one:true,options:opts,correct:opts.indexOf(it[1]),reveal:it[1]};},
+ aq:function(){var it=fresh('aq',QA),others=shuffle(QA.filter(function(x){return x!==it;})).slice(0,3).map(function(x){return x[0];});var opts=shuffle([it[0]].concat(others));
+   return {type:'aq',tag:'Ask it',title:'Here is the answer. What was the question?',he:'זו התשובה. מה הייתה השאלה?',
+     prompt:'<span class="big">'+esc(it[1])+'</span>',speak:it[1],mode:'buttons',one:true,options:opts,correct:opts.indexOf(it[0]),reveal:it[0]};},
+ gram:function(){var it=fresh('gram',GRAM),right=it.o[it.a],opts=shuffle(it.o.slice());
+   return {type:'gram',tag:'Grammar',title:'Complete the sentence.',he:'השלם את המשפט',
+     prompt:'<span class="big">'+esc(it.s).replace('___','<span style="color:var(--gold)">____</span>')+'</span>',mode:'buttons',options:opts,correct:opts.indexOf(right),reveal:it.s.replace('___',right)};},
+ build:function(){var s=fresh('build',SENT),words=s.split(' '),tiles;do{tiles=shuffle(words);}while(tiles.join(' ')===s);
+   return {type:'build',tag:'Build it',title:'Build the sentence. Tap the words in order.',he:'סדר את המילים למשפט נכון',
+     prompt:'<span class="big" style="color:var(--muted)">🏗️ '+words.length+' words</span>',mode:'tiles',tiles:tiles,target:words,joiner:' ',reveal:s};},
+ read:function(){var r=pick(READ),st=pick(r.st),opts=['TRUE','FALSE'];
+   return {type:'read',tag:'Reading',title:'Read the text. Is the sentence true or false?',he:'קרא: המשפט נכון או לא נכון?',
+     prompt:'<div class="text">'+esc(r.t)+'</div><div class="stmt">'+esc(st[0])+'</div>',speak:r.t,mode:'buttons',options:opts,correct:st[1]?0:1,reveal:st[0]+' → '+(st[1]?'TRUE':'FALSE')};}
+};
+
+/* ---------------- state & routing ---------------- */
+var app=document.getElementById('app');
+var M=null; /* current match */
+var screen='home';
+
+function topbar(){
+  return '<div class="top"><div class="brand"><span class="ballico" aria-hidden="true">⚽</span>NADAV\'S ENGLISH CUP</div>'+
+    '<div class="chips"><span class="chip" title="Coins">🪙 '+P.coins+'</span><span class="chip" title="Trophies">🏆 '+P.trophies+'</span>'+
+    '<button class="iconbtn" data-a="sound" aria-label="'+(P.sound?'Sound off':'Sound on')+'">'+(P.sound?'🔊':'🔇')+'</button>'+
+    (screen!=='home'?'<button class="iconbtn" data-a="home" aria-label="Home">🏠</button>':'')+'</div></div>';
+}
+function shirt(col,num,size){
+  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 120 120" aria-hidden="true"><path d="M40 10 L16 22 L6 50 L24 58 L28 46 V112 H92 V46 L96 58 L114 50 L104 22 L80 10 C76 22 44 22 40 10 Z" fill="'+col+'" stroke="#0a1424" stroke-width="3"/><path d="M40 10 C44 22 76 22 80 10" fill="none" stroke="#fff" stroke-width="4"/>'+
+    '<text x="60" y="58" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="15" fill="#fff" letter-spacing="1">NADAV</text>'+
+    '<text x="60" y="98" text-anchor="middle" font-family="Bebas Neue, Impact, sans-serif" font-size="42" fill="#fff">'+num+'</text></svg>';
+}
+function render(){
+  if(screen==='home')renderHome();
+  else if(screen==='match')renderMatch();
+  else if(screen==='result')renderResult();
+  else if(screen==='locker')renderLocker();
+}
+function go(s){screen=s;render();window.scrollTo(0,0);}
+
+function renderHome(){
+  var next=Math.min(P.unlocked,TEAMS.length-1),played=Object.keys(P.stars).length;
+  var road=TEAMS.map(function(t,i){
+    var st=P.stars[i]||0,locked=i>P.unlocked,isNext=i===P.unlocked&&!P.stars[i];
+    return '<button class="match'+(locked?' locked':'')+(isNext?' next':'')+(i===4?' final':'')+'" data-a="play" data-i="'+i+'"'+(locked?' aria-disabled="true"':'')+'>'+
+      '<span class="stage-no">'+(i===4?'Final':i===3?'Semi-final':'Match '+(i+1))+'</span>'+
+      '<span class="crest" aria-hidden="true">'+(locked?'🔒':t.crest)+'</span><b>'+t.name+'</b>'+
+      '<span class="theme">'+t.theme+'<br><span class="he">'+t.he+'</span></span>'+
+      '<span class="st" aria-label="'+st+' stars">'+(st?'★'.repeat(st)+'☆'.repeat(3-st):'☆☆☆')+'</span></button>';
+  }).join('');
+  var train=TRAIN.map(function(t){return '<button class="tr" data-a="train" data-t="'+t.t+'"><span class="i" aria-hidden="true">'+t.i+'</span><b>'+t.n+'</b><small>'+t.h+'</small></button>';}).join('');
+  app.innerHTML=topbar()+
+   '<section class="hero"><div class="card">'+shirt(kitColor(),P.num,170)+
+     '<div class="stats"><div><b>'+P.goals+'</b><small>Goals</small></div><div><b>'+played+'/5</b><small>Matches</small></div><div><b>'+P.trophies+'</b><small>Cups</small></div></div></div>'+
+   '<div><h1>Nadav\'s <span>English Cup</span></h1>'+
+     '<p class="he">כל תשובה נכונה היא גול! מנצחים 5 קבוצות בדרך לגביע: צלילים, מילים, שאלות, משפטים, ובגמר – הכול ביחד.</p>'+
+     '<div class="row"><button class="btn main" data-a="play" data-i="'+next+'">▶ Kick off: '+TEAMS[next].name+'</button><button class="btn" data-a="locker">👕 Locker room</button></div>'+
+     '<p style="font-size:14px">On a computer: press <b>1–4</b> to answer and <b>Enter</b> to continue.</p></div></section>'+
+   '<div class="sec"><h2>The road to the cup</h2><span class="he">כל ניצחון פותח את המשחק הבא</span></div><div class="road">'+road+'</div>'+
+   '<div class="sec"><h2>Training ground</h2><span class="he">אימון חופשי על נושא אחד</span></div><div class="train">'+train+'</div>';
+}
+
+function startMatch(idx,trainType){
+  used={};
+  var team,types;
+  if(trainType){team={name:'Training Squad',code:'TRN',crest:'🧢',col:'#475569',theme:'Training'};types=[];for(var i=0;i<8;i++)types.push(trainType);}
+  else{team=TEAMS[idx];types=team.types.slice();}
+  M={idx:idx,train:!!trainType,team:team,types:types,qi:0,us:0,them:0,res:[],q:null,lock:false,picked:[],golden:false,fbShown:false};
+  screen='match';
+  M.q=MK[M.types[0]]();
+  render();window.scrollTo(0,0);
+  whistle();setComm('<b>Kick off!</b> Nadav FC vs '+team.name+'.');
+}
+function minute(){var n=M.types.length;return Math.min(90,Math.round((M.qi)*90/n))+"'";}
+function dots(){var h='';for(var i=0;i<M.types.length;i++){var c=i<M.res.length?(M.res[i]===true?'g':(M.res[i]==='r'?'y':'s')):(i===M.qi?'n':'');h+='<i class="'+c+'"></i>';}return h;}
+function renderMatch(){
+  var t=M.team;
+  app.innerHTML=topbar()+
+   '<div class="board" role="group" aria-label="Scoreboard"><div class="side"><span class="badge" style="background:'+kitColor()+'">'+P.num+'</span><span class="nm">NADAV FC</span></div>'+
+     '<div class="score"><span id="us">'+M.us+'</span><span class="min" id="min">'+minute()+'</span><span id="them">'+M.them+'</span></div>'+
+     '<div class="side away"><span class="nm">'+t.name.toUpperCase()+'</span><span class="badge" style="background:'+t.col+'">'+t.crest+'</span></div></div>'+
+   '<div class="comm" id="comm" aria-live="polite"></div>'+
+   '<div class="dots" id="dots">'+dots()+'</div>'+
+   '<div class="stage" id="stage"><div class="goal" id="goal"><div id="zones"></div>'+
+     '<div class="keeper" id="keeper" aria-hidden="true"><span class="ar l"></span><span class="ar r"></span><span class="hd"></span><span class="bd"></span><span class="lg l"></span><span class="lg r"></span></div></div>'+
+     '<div class="ball" id="ball" aria-hidden="true">⚽</div></div>'+
+   '<section class="tactics" id="tactics"></section>'+
+   '<div class="keys">1–4 = answer · Enter = next · Backspace = undo</div>';
+  renderQuestion();
+}
+function setComm(h){var c=document.getElementById('comm');if(c)c.innerHTML=h;}
+function renderQuestion(){
+  var q=M.q,tac=document.getElementById('tactics'),zones=document.getElementById('zones');
+  M.lock=false;M.picked=[];M.fbShown=false;M.tries=0;
+  var head='<div class="qhead"><span class="tag">'+(M.golden?'Golden goal':q.tag)+'</span><span class="qtitle">'+esc(q.title)+'</span><span class="qhe he">'+q.he+'</span></div>';
+  var prompt='<div class="prompt">'+q.prompt+(q.speak?'<button class="say" data-a="say" aria-label="Listen">🔊</button>':'')+'</div>';
+  var body='';
+  zones.innerHTML='';
+  if(q.mode==='corners'){
+    zones.innerHTML=q.options.map(function(o,i){var z=ZONES[i];return '<button class="zone" data-a="ans" data-i="'+i+'" style="left:calc('+(z[0]*100)+'% - 43px);top:calc('+(z[1]*100)+'% - 29px)"><span class="k">'+(i+1)+'</span>'+o+'</button>';}).join('');
+    body='<p class="he" style="margin:0;text-align:center;color:var(--muted)">לחץ על הפינה בשער כדי לבעוט</p>';
+  }else if(q.mode==='buttons'){
+    body='<div class="opts'+(q.one?' one':'')+'">'+q.options.map(function(o,i){return '<button class="opt" data-a="ans" data-i="'+i+'"><span class="n">'+(i+1)+'</span>'+esc(o)+'</button>';}).join('')+'</div>';
+  }else{
+    var slots='';for(var s=0;s<q.target.length;s++)slots+='<span class="slot" data-s="'+s+'"></span>';
+    body='<div class="slots" id="slots">'+slots+'</div><div class="tiles" id="tiles">'+q.tiles.map(function(t,i){return '<button class="tile" data-a="tile" data-i="'+i+'">'+esc(t)+'</button>';}).join('')+'</div>';
+  }
+  tac.innerHTML=head+prompt+body+'<div id="fb"></div>';
+  document.getElementById('min').textContent=minute();
+  document.getElementById('dots').innerHTML=dots();
+  if(q.type==='sound')setTimeout(function(){say(q.speak);},300);
+}
+function updateSlots(){
+  var q=M.q;
+  for(var s=0;s<q.target.length;s++){var el=document.querySelector('.slot[data-s="'+s+'"]');if(!el)continue;var p=M.picked[s];el.textContent=p!=null?q.tiles[p]:'';el.className='slot'+(p!=null?' f':'');}
+  document.querySelectorAll('.tile').forEach(function(b){b.classList.toggle('used',M.picked.indexOf(+b.getAttribute('data-i'))>-1);});
+}
+function tapTile(i){
+  if(M.lock||M.picked.indexOf(i)>-1)return;
+  var q=M.q;M.picked.push(i);updateSlots();tone(700,0,.05,'triangle',.06);
+  if(M.picked.length===q.target.length){
+    var got=M.picked.map(function(p){return q.tiles[p];}).join(q.joiner),want=q.target.join(q.joiner);
+    finish(got===want,pick([0,1,2,3]));
+  }
+}
+function undo(){if(M.lock||!M.picked.length)return;M.picked.pop();updateSlots();}
+function answer(i){
+  if(M.lock)return;var q=M.q,ok=i===q.correct;
+  var btn=document.querySelector('[data-a="ans"][data-i="'+i+'"]');
+  if(btn&&btn.disabled)return;
+  if(q.mode==='buttons'){if(btn)btn.classList.add(ok?'ok':'no');
+    if(!ok&&(M.tries>0||!canRebound(q))){var r=document.querySelector('[data-a="ans"][data-i="'+q.correct+'"]');if(r)r.classList.add('ok');}}
+  if(!ok&&btn)btn.disabled=true;
+  finish(ok,q.mode==='corners'?i:pick([0,1,2,3]));
+}
+function canRebound(q){return !(q.mode==='buttons'&&q.options.length<=2);}
+function finish(ok,zone){
+  M.lock=true;
+  var q=M.q,rebound=!ok&&M.tries===0&&canRebound(q);
+  shoot(zone,ok,function(){
+    if(rebound){
+      M.tries=1;
+      var keep=0;
+      if(q.mode==='tiles'){while(keep<M.picked.length&&q.tiles[M.picked[keep]]===q.target[keep])keep++;M.picked=M.picked.slice(0,keep);}
+      setComm('Saved! But the ball bounces back to Nadav... <b>REBOUND! Shoot again!</b>');
+      tone(520,0,.12,'triangle',.12);tone(660,.12,.18,'triangle',.12);
+      document.getElementById('fb').innerHTML='<div class="fb rebound"><span>🔁 <b>Rebound!</b> <span class="he">לא נורא! הכדור חזר אליך – יש לך עוד בעיטה. תקן ונסה שוב.'+(q.mode==='tiles'?(keep?' השארתי את '+keep+' החלקים הראשונים שהיו נכונים.':' נתחיל מההתחלה.'):'')+'</span></span></div>';
+      setTimeout(function(){resetStage();if(q.mode==='tiles')updateSlots();M.lock=false;},700);
+      return;
+    }
+    M.res.push(ok?(M.tries?'r':true):false);
+    if(ok){M.us++;P.coins+=M.tries?5:10;P.goals++;setComm('<b>'+(M.tries?'Rebound goal! Never give up, Nadav!':pick(GOALTXT))+'</b>');}
+    else{M.them++;setComm(pick(SAVETXT)+' <b>'+M.team.name+'</b> score on the counter-attack!');}
+    save();
+    document.getElementById('us').textContent=M.us;document.getElementById('them').textContent=M.them;
+    document.getElementById('dots').innerHTML=dots();
+    var fb=document.getElementById('fb');M.fbShown=true;
+    if(ok){fb.innerHTML='<div class="fb good"><span>⚽ <b>GOAL!</b> '+esc(M.q.reveal)+'</span><button class="btn main" data-a="next">Next ▶</button></div>';if(M.q.type!=='read'&&M.q.type!=='aq'&&M.q.type!=='qa')say(M.q.reveal.split(' – ').pop().split(' = ').pop());}
+    else{fb.innerHTML='<div class="fb bad"><span>🧤 <b>Saved.</b> The right answer: <b>'+esc(M.q.reveal)+'</b></span><button class="btn main" data-a="next">Next ▶</button></div>';}
+  });
+}
+function shoot(zone,ok,cb){
+  var stage=document.getElementById('stage'),goal=document.getElementById('goal'),ball=document.getElementById('ball'),keeper=document.getElementById('keeper');
+  if(!stage){cb();return;}
+  var sr=stage.getBoundingClientRect(),gr=goal.getBoundingClientRect(),z=ZONES[zone];
+  var tx=gr.left-sr.left+gr.width*z[0],ty=gr.top-sr.top+gr.height*z[1];
+  var bx=ball.offsetLeft+ball.offsetWidth/2,by=ball.offsetTop+ball.offsetHeight/2;
+  tone(300,0,.08,'triangle',.2);
+  ball.style.transform='translate('+(tx-bx)+'px,'+(ty-by)+'px) scale(.62) rotate(600deg)';
+  var dir=z[0]<.5?-1:1;if(ok)dir=-dir;
+  var dx=gr.width*.3*dir,lift=z[1]<.5?-28:0;
+  keeper.style.transform='translateX(calc(-50% + '+dx+'px)) translateY('+lift+'px) rotate('+(dir*62)+'deg)';
+  setTimeout(function(){
+    var f=document.createElement('div');f.className='flash'+(ok?'':' save');f.textContent=ok?'GOAL!':'SAVED!';stage.appendChild(f);
+    if(ok){goal.classList.add('shake');goalSfx();}else saveSfx();
+    setTimeout(function(){cb();},450);
+  },560);
+}
+function resetStage(){
+  var ball=document.getElementById('ball'),keeper=document.getElementById('keeper'),goal=document.getElementById('goal');
+  if(!ball)return;
+  ball.style.transition='none';keeper.style.transition='none';ball.style.transform='';keeper.style.transform='';goal.classList.remove('shake');
+  document.querySelectorAll('.flash').forEach(function(f){f.remove();});
+  void ball.offsetWidth;ball.style.transition='';keeper.style.transition='';
+}
+function nextQ(){
+  if(!M.fbShown)return;
+  M.qi++;
+  if(M.qi>=M.types.length){
+    if(!M.train&&M.us===M.them&&!M.golden){M.golden=true;M.types.push('sound');setComm('<b>It\'s a draw!</b> Golden goal: the next goal wins!');whistle();}
+    else{endMatch();return;}
+  }
+  M.q=MK[M.types[M.qi]]();resetStage();renderQuestion();
+}
+function endMatch(){
+  var correct=M.res.filter(Boolean).length,first=M.res.filter(function(x){return x===true;}).length,n=M.res.length,win=M.us>M.them,stars=0;
+  if(win){stars=1;if(correct>=Math.ceil(n*.75))stars=2;if(first>=n-1)stars=3;P.coins+=30;}
+  if(!M.train&&win){P.stars[M.idx]=Math.max(P.stars[M.idx]||0,stars);if(M.idx===P.unlocked&&P.unlocked<TEAMS.length-1)P.unlocked++;if(M.idx===TEAMS.length-1)P.trophies++;}
+  M.result={win:win,stars:stars,correct:correct,first:first,n:n};save();whistle();go('result');
+}
+function confetti(){var c='';var cols=['#ffc93c','#36d17c','#5aa9ff','#ff5d62','#ffffff'];for(var i=0;i<60;i++)c+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;background:'+pick(cols)+';animation-duration:'+(2.4+Math.random()*2).toFixed(2)+'s;animation-delay:'+(Math.random()*.8).toFixed(2)+'s"></i>';return '<div class="confetti" aria-hidden="true">'+c+'</div>';}
+function renderResult(){
+  var r=M.result,t=M.team,cup=!M.train&&r.win&&M.idx===TEAMS.length-1;
+  var title=M.train?'Training done!':(cup?'CHAMPIONS!':(r.win?'YOU WIN!':'Not this time!'));
+  var msg=M.train?'אימון מעולה! '+r.correct+' מתוך '+r.n+' נכון.':(cup?'נדב זכה בגביע האנגלית! 🏆':(r.win?'ניצחון! המשחק הבא נפתח.':'כמעט! נסה שוב – צריך יותר גולים מהיריב.'));
+  var nextBtn=(!M.train&&r.win&&M.idx<TEAMS.length-1)?'<button class="btn main" data-a="play" data-i="'+(M.idx+1)+'">Next match ▶</button>':'';
+  app.innerHTML=topbar()+((r.win||M.train)?confetti():'')+
+   '<section class="result">'+(cup?'<div class="trophy" aria-hidden="true">🏆</div>':'')+
+   '<h1>'+title+'</h1>'+
+   '<div class="fs">NADAV FC '+M.us+' – '+M.them+' '+t.code+'</div>'+
+   (r.win&&!M.train?'<div class="stars" aria-label="'+r.stars+' stars">'+'★'.repeat(r.stars)+'☆'.repeat(3-r.stars)+'</div>':'')+
+   '<p class="he" style="font-size:20px;margin:0">'+msg+'</p>'+
+   '<p style="margin:0;color:var(--muted)">First kick: '+r.first+' · Rebound goals: '+(r.correct-r.first)+' · Missed: '+(r.n-r.correct)+' · Coins: '+P.coins+' 🪙</p>'+
+   (r.first<r.correct?'<p class="he" style="margin:0;color:var(--gold)">כל הכבוד על התיקונים! 3 כוכבים מקבלים כשכמעט הכול נכון כבר בבעיטה הראשונה.</p>':'')+
+   '<div class="row">'+nextBtn+'<button class="btn'+(nextBtn?'':' main')+'" data-a="replay">↻ Play again</button><button class="btn" data-a="home">🏠 Home</button></div></section>';
+}
+function renderLocker(){
+  var kits=KITS.map(function(k){var own=P.owned.indexOf(k.id)>-1,on=P.kit===k.id;
+    return '<div class="kit'+(on?' on':'')+'">'+shirt(k.c,P.num,90)+'<b>'+k.n+'</b>'+
+      (on?'<span style="color:var(--gold);font-weight:700">Wearing</span>':own?'<button class="btn" data-a="wear" data-k="'+k.id+'">Wear</button>':'<button class="btn" data-a="buy" data-k="'+k.id+'"'+(P.coins<k.p?' disabled style="opacity:.5"':'')+'>🪙 '+k.p+'</button>')+'</div>';}).join('');
+  var nums=NUMS.map(function(n){return '<button class="'+(P.num===n?'on':'')+'" data-a="num" data-n="'+n+'">'+n+'</button>';}).join('');
+  app.innerHTML=topbar()+'<div class="sec"><h2>Locker room</h2><span class="he">קונים חולצות במטבעות שמרוויחים על גולים</span></div>'+
+    '<div class="kits">'+kits+'</div><div class="sec"><h2>Shirt number</h2></div><div class="nums">'+nums+'</div>';
+}
+
+/* ---------------- events ---------------- */
+app.addEventListener('click',function(e){
+  var b=e.target.closest('[data-a]');if(!b)return;var a=b.getAttribute('data-a');
+  ctx();
+  if(a==='home')go('home');
+  else if(a==='sound'){P.sound=!P.sound;save();render();}
+  else if(a==='play'){var i=+b.getAttribute('data-i');if(i<=P.unlocked)startMatch(i,null);}
+  else if(a==='train')startMatch(-1,b.getAttribute('data-t'));
+  else if(a==='replay'){if(M.train)startMatch(-1,M.types[0]);else startMatch(M.idx,null);}
+  else if(a==='ans')answer(+b.getAttribute('data-i'));
+  else if(a==='tile')tapTile(+b.getAttribute('data-i'));
+  else if(a==='next')nextQ();
+  else if(a==='say')say(M.q.speak);
+  else if(a==='locker')go('locker');
+  else if(a==='buy'){var k=KITS.filter(function(x){return x.id===b.getAttribute('data-k');})[0];if(k&&P.coins>=k.p){P.coins-=k.p;P.owned.push(k.id);P.kit=k.id;save();render();tone(880,0,.12,'triangle',.12);}}
+  else if(a==='wear'){P.kit=b.getAttribute('data-k');save();render();}
+  else if(a==='num'){P.num=+b.getAttribute('data-n');save();render();}
+});
+document.addEventListener('keydown',function(e){
+  if(screen!=='match'||!M)return;
+  var q=M.q;
+  if(e.key==='Enter'){if(M.fbShown){e.preventDefault();nextQ();}return;}
+  if(e.key==='Backspace'&&q.mode==='tiles'){e.preventDefault();undo();return;}
+  var n=parseInt(e.key,10);
+  if(n>=1&&n<=9){
+    if(q.mode==='tiles'){var free=[];q.tiles.forEach(function(_,i){if(M.picked.indexOf(i)<0)free.push(i);});}
+    else if(n<=q.options.length)answer(n-1);
+  }
+});
+app.addEventListener('click',function(e){var s=e.target.closest('.slot.f');if(s&&M&&!M.lock){var idx=+s.getAttribute('data-s');if(idx===M.picked.length-1)undo();}});
+
+render();
+})();
+</script>
+
+</body></html>
